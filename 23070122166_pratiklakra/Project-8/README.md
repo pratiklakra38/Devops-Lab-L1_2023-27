@@ -54,7 +54,7 @@ Project-8/
 ├── order-deployment.yaml
 ├── order-service.yaml
 │
-├── Screenshots/
+├── screenshots/
 │
 ├── README.md
 │
@@ -117,7 +117,7 @@ data:
 kubectl apply -f app-configmap.yaml
 ```
 
-![ConfigMap](Screenshots/02_configmap_created.png)
+![ConfigMap](/02_configmap_created.png)
 Confirmation that the ConfigMap was created successfully in the cluster.
 
 ### Step 2: Create Secret
@@ -139,7 +139,7 @@ data:
 kubectl apply -f app-secret.yaml
 ```
 
-![Secret](Screenshots/03_secret_created.png)
+![Secret](/03_secret_created.png)
 Confirmation that the Secret was created successfully in the cluster.
 
 ### Step 3: Frontend Deployment
@@ -175,7 +175,7 @@ spec:
             - containerPort: 80
 ```
 
-![Frontend Deployment](Screenshots/04_frontend_deployment_yaml.png)
+![Frontend Deployment](screenshots/04_frontend_deployment_yaml.png)
 The Deployment YAML file defining the Frontend microservice configuration.
 
 ### Step 4: Frontend Service
@@ -197,7 +197,7 @@ spec:
       nodePort: 30081
 ```
 
-![Frontend Service](Screenshots/05_frontend_service_yaml.png)
+![Frontend Service](screenshots/05_frontend_service_yaml.png)
 The Service YAML file exposing the Frontend Deployment using NodePort.
 
 ```bash
@@ -205,7 +205,7 @@ kubectl apply -f frontend-deployment.yaml
 kubectl apply -f frontend-service.yaml
 ```
 
-![Frontend Running](Screenshots/06_frontend_running.png)
+![Frontend Running](screenshots/06_frontend_running.png)
 Confirmation that the Frontend Deployment and Service were applied successfully.
 
 ### Step 5: Product Deployment and Service
@@ -241,7 +241,7 @@ spec:
             - containerPort: 8081
 ```
 
-![Product Deployment](Screenshots/07_product_deployment_yaml.png)
+![Product Deployment](screenshots/07_product_deployment_yaml.png)
 The Deployment YAML file defining the Product microservice configuration.
 
 ```yaml
@@ -258,7 +258,7 @@ spec:
       targetPort: 8081
 ```
 
-![Product Service](Screenshots/08_product_service_yaml.png)
+![Product Service](screenshots/08_product_service_yaml.png)
 The Service YAML file exposing the Product Deployment internally using ClusterIP.
 
 ```bash
@@ -266,10 +266,10 @@ kubectl apply -f product-deployment.yaml
 kubectl apply -f product-service.yaml
 ```
 
-![Product Running](Screenshots/09_product_running_1.png)
+![Product Running](screenshots/09_product_running_1.png)
 Verification output showing the Product Deployment running successfully.
 
-![Product Running](Screenshots/09_product_running_2.png)
+![Product Running](screenshots/09_product_running_2.png)
 Verification output showing the Product Service running successfully.
 
 ### Step 6: Customer Deployment and Service
@@ -305,7 +305,7 @@ spec:
             - containerPort: 8082
 ```
 
-![Customer Deployment](Screenshots/10_customer_deployment_yaml.png)
+![Customer Deployment](screenshots/10_customer_deployment_yaml.png)
 The Deployment YAML file defining the Customer microservice configuration.
 
 ```yaml
@@ -322,7 +322,7 @@ spec:
       targetPort: 8082
 ```
 
-![Customer Service](Screenshots/11_customer_service_yaml.png)
+![Customer Service](screenshots/11_customer_service_yaml.png)
 The Service YAML file exposing the Customer Deployment internally using ClusterIP.
 
 ```bash
@@ -363,7 +363,7 @@ spec:
             - containerPort: 8083
 ```
 
-![Order Deployment](Screenshots/12_order_deployment_yaml.png)
+![Order Deployment](screenshots/12_order_deployment_yaml.png)
 The Deployment YAML file defining the Order microservice configuration.
 
 ```yaml
@@ -380,7 +380,7 @@ spec:
       targetPort: 8083
 ```
 
-![Order Service](Screenshots/13_order_service_yaml.png)
+![Order Service](screenshots/13_order_service_yaml.png)
 The Service YAML file exposing the Order Deployment internally using ClusterIP.
 
 ```bash
@@ -401,22 +401,22 @@ kubectl get secrets
 kubectl get all
 ```
 
-![Deployments](Screenshots/14_all_deployments_running.png)
+![Deployments](screenshots/14_all_deployments_running.png)
 Output showing all four microservice Deployments running with the desired replicas.
 
-![Pods](Screenshots/15_all_pods_running.png)
+![Pods](screenshots/15_all_pods_running.png)
 Output showing all microservice pods in the Running state.
 
-![Services](Screenshots/16_all_services_running.png)
+![Services](screenshots/16_all_services_running.png)
 Output showing all Services, including the Frontend NodePort and internal ClusterIP Services.
 
-![ConfigMap](Screenshots/17_configmap_verified.png)
+![ConfigMap](screenshots/17_configmap_verified.png)
 Verification confirming the ConfigMap is present in the cluster.
 
-![Secret](Screenshots/18_secret_verified.png)
+![Secret](screenshots/18_secret_verified.png)
 Verification confirming the Secret is present in the cluster.
 
-![Resources](Screenshots/19_all_kubernetes_resources.png)
+![Resources](screenshots/19_all_kubernetes_resources.png)
 Combined output listing all active Kubernetes resources for the application.
 
 ### Step 9: Access Frontend
@@ -427,10 +427,10 @@ The Frontend application was accessed using Minikube's service command, which op
 minikube service frontend-service
 ```
 
-![Frontend Browser](Screenshots/20_frontend_application_1.png)
+![Frontend Browser](screenshots/20_frontend_application_1.png)
 The Frontend application successfully loaded in the browser.
 
-![Frontend Browser](Screenshots/20_frontend_application_2.png)
+![Frontend Browser](screenshots/20_frontend_application_2.png)
 Additional view confirming the Frontend was accessed successfully.
 
 The frontend was successfully accessed using the NodePort Service.
@@ -443,7 +443,7 @@ Resources from the previous MongoDB project were removed before capturing the fi
 kubectl get all
 ```
 
-![Final Cluster](Screenshots/21_final_cluster_state.png)
+![Final Cluster](screenshots/21_final_cluster_state.png)
 The final cluster state showing only the Frontend, Product, Customer, and Order resources.
 
 ## Kubernetes Workflow
