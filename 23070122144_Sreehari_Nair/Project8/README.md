@@ -97,7 +97,6 @@ Project8/
 │       └── Dockerfile
 │
 ├── screenshots/                   # Lab verification screenshots
-├── GUIDE.md                       # Step-by-step terminal execution guide
 ├── README.md                      # Final project documentation & lab report
 └── .gitignore
 ```

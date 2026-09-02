@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Event Management System</title>
+    <!-- Premium Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="glass-bg-glow"></div>
+    <div class="glass-bg-glow-secondary"></div>
+
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="brand">
+                <i class="fa-solid fa-graduation-cap logo-icon"></i>
+                <div class="brand-text">
+                    <h1>CampusLink</h1>
+                    <p>DevOps Lab Event Hub</p>
+                </div>
+            </div>
+            <div class="meta-info">
+                <div class="badge badge-env">
+                    <i class="fa-solid fa-server"></i>
+                    <span>Env: <strong>{{ environment | upper }}</strong></span>
+                </div>
+                <div class="badge badge-secret">
+                    <i class="fa-solid fa-key"></i>
+                    <span>DB: <strong>{{ db_user }}</strong></span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Flash messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <div class="flash-messages">
+              {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                  <i class="fa-solid {% if category == 'success' %}fa-circle-check{% else %}fa-circle-exclamation{% endif %}"></i>
+                  <span>{{ message }}</span>
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        <!-- Grid Layout -->
+        <div class="dashboard-grid">
+            
+            <!-- Service Health Check Section -->
+            <section class="card span-full health-card">
+                <h2><i class="fa-solid fa-heart-pulse"></i> Microservices Status Monitor</h2>
+                <div class="services-status-container">
+                    
+                    <div class="status-item {% if student_status == 'UP' %}status-up{% else %}status-down{% endif %}">
+                        <div class="status-icon-wrapper">
+                            <i class="fa-solid fa-user-graduate"></i>
+                        </div>
+                        <div class="status-details">
+                            <h3>Student Service</h3>
+                            <span class="status-tag">
+                                <span class="dot"></span>
+                                {{ student_status }}
+                            </span>
+                        </div>
+                        <div class="status-url">port 31782</div>
+                    </div>
+
+                    <div class="status-item {% if event_status == 'UP' %}status-up{% else %}status-down{% endif %}">
+                        <div class="status-icon-wrapper">
+                            <i class="fa-regular fa-calendar-days"></i>
+                        </div>
+                        <div class="status-details">
+                            <h3>Event Service</h3>
+                            <span class="status-tag">
+                                <span class="dot"></span>
+                                {{ event_status }}
+                            </span>
+                        </div>
+                        <div class="status-url">port 31783</div>
+                    </div>
+
+                    <div class="status-item {% if reg_status == 'UP' %}status-up{% else %}status-down{% endif %}">
+                        <div class="status-icon-wrapper">
+                            <i class="fa-solid fa-clipboard-list"></i>
+                        </div>
+                        <div class="status-details">
+                            <h3>Registration Service</h3>
+                            <span class="status-tag">
+                                <span class="dot"></span>
+                                {{ reg_status }}
+                            </span>
+                        </div>
+                        <div class="status-url">port 31784</div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Registration Action Card -->
+            <section class="card register-card">
+                <h2><i class="fa-solid fa-plus"></i> Quick Event Register</h2>
+                <form action="/register" method="POST" class="register-form">
+                    <div class="form-group">
+                        <label for="student_id"><i class="fa-solid fa-user-graduate"></i> Select Student</label>
+                        <select name="student_id" id="student_id" required {% if student_status != 'UP' %}disabled{% endif %}>
+                            {% if student_status != 'UP' %}
+                                <option value="">Student service is unavailable</option>
+                            {% else %}
+                                <option value="" disabled selected>-- Choose Student --</option>
+                                {% for s in students %}
+                                    <option value="{{ s.id }}">{{ s.name }} (Year {{ s.year }} - {{ s.course }})</option>
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="event_id"><i class="fa-regular fa-calendar-days"></i> Select Event</label>
+                        <select name="event_id" id="event_id" required {% if event_status != 'UP' %}disabled{% endif %}>
+                            {% if event_status != 'UP' %}
+                                <option value="">Event service is unavailable</option>
+                            {% else %}
+                                <option value="" disabled selected>-- Choose Event --</option>
+                                {% for e in events %}
+                                    <option value="{{ e.id }}">{{ e.name }} ({{ e.venue }})</option>
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn-submit" {% if student_status != 'UP' or event_status != 'UP' or reg_status != 'UP' %}disabled{% endif %}>
+                        <i class="fa-solid fa-circle-check"></i> Submit Registration
+                    </button>
+                </form>
+            </section>
+
+            <!-- Active Registrations List -->
+            <section class="card registrations-list-card">
+                <h2><i class="fa-solid fa-list-check"></i> Registrations List</h2>
+                <div class="table-wrapper">
+                    {% if reg_status != 'UP' %}
+                        <div class="error-empty-state">
+                            <i class="fa-solid fa-circle-exclamation error-icon"></i>
+                            <p>Registration Service is currently offline.</p>
+                        </div>
+                    {% elif not registrations %}
+                        <div class="empty-state">
+                            <i class="fa-regular fa-folder-open"></i>
+                            <p>No event registrations recorded yet.</p>
+                        </div>
+                    {% else %}
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Reg ID</th>
+                                    <th>Student</th>
+                                    <th>Registered Event</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for r in registrations %}
+                                    <tr>
+                                        <td><span class="id-badge">#{{ r.id }}</span></td>
+                                        <td class="semi-bold">{{ r.student_name }}</td>
+                                        <td><span class="event-tag"><i class="fa-solid fa-calendar-check"></i> {{ r.event_name }}</span></td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endif %}
+                </div>
+            </section>
+
+            <!-- Students Roster Card -->
+            <section class="card students-card">
+                <h2><i class="fa-solid fa-users"></i> Student Database</h2>
+                <div class="table-wrapper">
+                    {% if student_status != 'UP' %}
+                        <div class="error-empty-state">
+                            <i class="fa-solid fa-circle-exclamation error-icon"></i>
+                            <p>Student Service is currently offline.</p>
+                        </div>
+                    {% elif not students %}
+                        <div class="empty-state">
+                            <i class="fa-regular fa-folder-open"></i>
+                            <p>No students enrolled.</p>
+                        </div>
+                    {% else %}
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Course</th>
+                                    <th>Year</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for s in students %}
+                                    <tr>
+                                        <td><span class="id-badge">#{{ s.id }}</span></td>
+                                        <td class="semi-bold">{{ s.name }}</td>
+                                        <td>{{ s.course }}</td>
+                                        <td><span class="year-badge">Year {{ s.year }}</span></td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endif %}
+                </div>
+            </section>
+
+            <!-- Events Schedule Card -->
+            <section class="card events-card">
+                <h2><i class="fa-solid fa-calendar-check"></i> Active Campus Events</h2>
+                <div class="table-wrapper">
+                    {% if event_status != 'UP' %}
+                        <div class="error-empty-state">
+                            <i class="fa-solid fa-circle-exclamation error-icon"></i>
+                            <p>Event Service is currently offline.</p>
+                        </div>
+                    {% elif not events %}
+                        <div class="empty-state">
+                            <i class="fa-regular fa-folder-open"></i>
+                            <p>No events scheduled.</p>
+                        </div>
+                    {% else %}
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Event Name</th>
+                                    <th>Venue</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for e in events %}
+                                    <tr>
+                                        <td><span class="id-badge">#{{ e.id }}</span></td>
+                                        <td class="semi-bold text-accent">{{ e.name }}</td>
+                                        <td><i class="fa-solid fa-location-dot location-icon"></i> {{ e.venue }}</td>
+                                        <td><span class="date-badge"><i class="fa-regular fa-calendar"></i> {{ e.date }}</span></td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endif %}
+                </div>
+            </section>
+
+        </div>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>Campus Event Management System • DevOps Lab Demonstration • Shivam Kapure</p>
+        </footer>
+    </div>
+</body>
+</html>

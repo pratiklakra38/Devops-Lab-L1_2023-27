@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: social-media-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: social-media
+  template:
+    metadata:
+      labels:
+        app: social-media
+    spec:
+      containers:
+        - name: social-media-container
+          image: social-media-app:1.0
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 5000
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "64Mi"
+            limits:
+              cpu: "500m"
+              memory: "256Mi"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 10
+            periodSeconds: 10

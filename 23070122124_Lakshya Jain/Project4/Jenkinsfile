@@ -1,0 +1,63 @@
+pipeline {
+    agent none // Do not allocate a global agent; each stage runs on its own specified agent
+
+    options {
+        timeout(time: 1, unit: 'HOURS') // Pipeline timeout safety
+        ansiColor('xterm') // Enable ANSI color codes in output console if plugin is installed
+    }
+
+    stages {
+        stage('Compile') {
+            agent {
+                label 'compile-node' // Runs on the dedicated slave node for compilation
+            }
+            steps {
+                echo '=== STAGE: Compile ==='
+                echo 'Running Maven clean compile on agent node: compile-node'
+                script {
+                    if (isUnix()) {
+                        sh 'mvn clean compile'
+                    } else {
+                        bat 'mvn clean compile'
+                    }
+                }
+                
+                echo 'Stashing compile outputs and project sources for the test node...'
+                // Stash files so they are preserved and sent to the next node
+                stash name: 'compiled-project', includes: 'pom.xml, src/**, target/**'
+            }
+        }
+
+        stage('Test') {
+            agent {
+                label 'test-node' // Runs on the dedicated slave node for testing
+            }
+            steps {
+                echo '=== STAGE: Test ==='
+                echo 'Unstashing compiled project artifacts on agent node: test-node'
+                unstash 'compiled-project'
+                
+                echo 'Running Maven test suite...'
+                script {
+                    if (isUnix()) {
+                        sh 'mvn test'
+                    } else {
+                        bat 'mvn test'
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            echo '=== Distributed Pipeline Execution Completed ==='
+        }
+        success {
+            echo 'Build and test succeeded across both agent nodes!'
+        }
+        failure {
+            echo 'Build failed. Please inspect stage logs above.'
+        }
+    }
+}

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: registration-service
+  namespace: project8
+  labels:
+    app: registration-service
+spec:
+  type: ClusterIP
+  ports:
+  - port: 31784
+    targetPort: 31784
+    protocol: TCP
+  selector:
+    app: registration-service

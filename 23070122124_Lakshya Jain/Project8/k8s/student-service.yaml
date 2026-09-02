@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: student-service
+  namespace: project8
+  labels:
+    app: student-service
+spec:
+  type: ClusterIP
+  ports:
+  - port: 31782
+    targetPort: 31782
+    protocol: TCP
+  selector:
+    app: student-service

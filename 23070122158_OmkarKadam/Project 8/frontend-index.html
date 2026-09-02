@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project 8 Microservices</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Hello from Project 8 Frontend</h1>
+
+    <p>Kubernetes Microservices Application</p>
+
+    <button onclick="checkBackend()">Check Backend</button>
+
+    <div id="result">
+        Backend status will appear here.
+    </div>
+
+    <script>
+        async function checkBackend() {
+            const result = document.getElementById("result");
+
+            try {
+                const response = await fetch("/api/");
+                const text = await response.text();
+
+                result.innerHTML =
+                    "<b>Backend Connected Successfully!</b><br>" + text;
+
+            } catch (error) {
+
+                result.innerHTML =
+                    "<b>Backend unavailable</b><br>" + error;
+            }
+        }
+    </script>
+
+</body>
+</html>

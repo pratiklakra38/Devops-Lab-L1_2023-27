@@ -60,7 +60,6 @@ Project-7/
 ├── screenshots/
 │
 ├── README.md
-├── GUIDE.md
 └── .gitignore
 ```
 
@@ -72,8 +71,7 @@ Project-7/
 | `mongodb-service.yaml` | Provides internal MongoDB networking using ClusterIP |
 | `mongo-express-deployment.yaml` | Defines the Mongo Express Deployment and environment variables |
 | `mongo-express-service.yaml` | Exposes Mongo Express using NodePort |
-| `screenshots/` | Contains screenshots captured during implementation |
-| `GUIDE.md` | Step-by-step execution and setup guide |
+| `screenshots/` | Contains screenshots captured during implementation |hh6c
 | `README.md` | Project documentation |
 | `.gitignore` | Specifies files ignored by Git |
 

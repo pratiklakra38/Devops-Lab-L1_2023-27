@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: project8
+data:
+  ENVIRONMENT: "production"
+  STUDENT_SERVICE_URL: "http://student-service:31782"
+  EVENT_SERVICE_URL: "http://event-service:31783"
+  REGISTRATION_SERVICE_URL: "http://registration-service:31784"
