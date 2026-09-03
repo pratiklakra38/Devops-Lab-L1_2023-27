@@ -1,5 +1,10 @@
 # Assignment TW1.2 – Jira Project & Issue Tracking
 
+## Student Details
+- **Name:** Avi S Gupta
+- **PRN:** 23070122060
+- **Course:** DevOps Lab L1 (2023–27)
+
 ## Objective
 The objective of this assignment is to learn how to manage software projects using Agile methodologies on the Jira project management platform. This includes setting up a Scrum board, creating and defining user stories, and managing backlog tasks.
 

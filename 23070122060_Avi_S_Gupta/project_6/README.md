@@ -1,5 +1,10 @@
 # Project 6: Kubernetes Horizontal Pod Autoscaling
 
+## Student Details
+- **Name:** Avi S Gupta
+- **PRN:** 23070122060
+- **Course:** DevOps Lab L1 (2023–27)
+
 This project demonstrates application scalability using Kubernetes Horizontal Pod Autoscaling (HPA). It deploys a simple application, exposes it through a Service, generates traffic, and shows Kubernetes increasing or decreasing the number of Pods based on CPU usage.
 
 ## Project Flow

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project 8 Frontend</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f4f7fb;
+        margin: 0;
+        padding: 40px;
+        color: #1f2937;
+      }
+      .card {
+        max-width: 760px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 12px;
+        padding: 24px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      }
+      h1 {
+        margin-top: 0;
+        color: #111827;
+      }
+      .status {
+        margin-top: 12px;
+        padding: 12px 16px;
+        background: #ecfdf5;
+        border-left: 5px solid #10b981;
+        border-radius: 8px;
+      }
+      button {
+        margin-top: 16px;
+        background: #2563eb;
+        color: white;
+        border: none;
+        padding: 10px 16px;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      pre {
+        background: #0f172a;
+        color: #e2e8f0;
+        padding: 16px;
+        border-radius: 8px;
+        overflow-x: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>Project 8 Microservices Dashboard</h1>
+      <div class="status">Frontend is running and proxying /api traffic to project8-backend-service:5000</div>
+      <button onclick="loadBackendData()">Load backend data</button>
+      <pre id="output">Waiting for data...</pre>
+    </div>
+
+    <script>
+      async function loadBackendData() {
+        const output = document.getElementById('output');
+        try {
+          const response = await fetch('/api/');
+          const data = await response.json();
+          output.textContent = JSON.stringify(data, null, 2);
+        } catch (error) {
+          output.textContent = 'Error fetching backend data: ' + error.message;
+        }
+      }
+    </script>
+  </body>
+</html>

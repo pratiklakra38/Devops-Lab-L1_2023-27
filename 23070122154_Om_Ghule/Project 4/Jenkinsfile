@@ -1,0 +1,29 @@
+pipeline {
+    agent none
+
+    stages {
+        stage('Compile') {
+            agent { label 'compile-agent' }
+
+            steps {
+                checkout scm
+
+                dir('23070122154_Om_Ghule/Project 4') {
+                    bat 'mvn clean compile'
+                }
+            }
+        }
+
+        stage('Test') {
+            agent { label 'test-agent' }
+
+            steps {
+                checkout scm
+
+                dir('23070122154_Om_Ghule/Project 4') {
+                    bat 'mvn test'
+                }
+            }
+        }
+    }
+}

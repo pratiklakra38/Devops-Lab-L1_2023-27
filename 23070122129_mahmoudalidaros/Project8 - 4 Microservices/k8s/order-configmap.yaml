@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: order-config
+data:
+  APP_NAME: "Order Service"
+  APP_PORT: "5001"

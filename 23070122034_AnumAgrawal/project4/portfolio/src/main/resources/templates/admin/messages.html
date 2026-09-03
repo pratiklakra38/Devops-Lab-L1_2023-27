@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Manage Messages')}"></head>
+<body>
+    <div class="particles-bg"></div>
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+    <div class="container-fluid" style="padding-top: 80px;">
+        <div class="row">
+            <nav class="col-md-3 col-lg-2 d-md-block admin-sidebar glass-panel mt-3 ms-3 py-4">
+                <div class="position-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item"><a class="nav-link admin-nav-link" th:href="@{/admin/dashboard}"><i class="fas fa-tachometer-alt me-2"></i> Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link admin-nav-link" th:href="@{/admin/projects}"><i class="fas fa-project-diagram me-2"></i> Projects</a></li>
+                        <li class="nav-item"><a class="nav-link admin-nav-link" th:href="@{/admin/skills}"><i class="fas fa-code me-2"></i> Skills</a></li>
+                        <li class="nav-item"><a class="nav-link admin-nav-link active" th:href="@{/admin/messages}"><i class="fas fa-envelope me-2"></i> Messages</a></li>
+                    </ul>
+                </div>
+            </nav>
+
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4 border-bottom border-secondary">
+                    <h1 class="h2">Inbox Messages</h1>
+                </div>
+
+                <div th:if="${success}" class="alert alert-success alert-dismissible fade show bg-success bg-opacity-25 text-success border-success" role="alert">
+                    <span th:text="${success}"></span>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+                <div class="glass-panel p-4">
+                    <div class="accordion" id="messageAccordion">
+                        <div class="accordion-item bg-transparent border-secondary" th:each="message, stat : ${messages}">
+                            <h2 class="accordion-header" th:id="'heading' + ${stat.index}">
+                                <button class="accordion-button collapsed bg-dark text-white border-bottom border-secondary" type="button" data-bs-toggle="collapse" th:attr="data-bs-target='#collapse' + ${stat.index}, aria-controls='collapse' + ${stat.index}" aria-expanded="false">
+                                    <div class="d-flex justify-content-between w-100 me-3">
+                                        <span><i class="fas fa-user-circle me-2 text-primary"></i> <strong th:text="${message.name}">Name</strong></span>
+                                        <small class="text-muted" th:text="${#temporals.format(message.createdAt, 'dd-MM-yyyy HH:mm')}">Date</small>
+                                    </div>
+                                </button>
+                            </h2>
+                            <div th:id="'collapse' + ${stat.index}" class="accordion-collapse collapse" th:attr="aria-labelledby='heading' + ${stat.index}" data-bs-parent="#messageAccordion">
+                                <div class="accordion-body text-light">
+                                    <div class="row mb-3 pb-2 border-bottom border-secondary">
+                                        <div class="col-md-6">
+                                            <strong>Email:</strong> <a th:href="'mailto:' + ${message.email}" class="text-primary text-decoration-none" th:text="${message.email}">email</a>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <strong>Phone:</strong> <span th:text="${message.phone != null and !message.phone.empty ? message.phone : 'Not provided'}">phone</span>
+                                        </div>
+                                    </div>
+                                    <p class="mb-4" th:text="${message.content}" style="white-space: pre-wrap;">Message content</p>
+                                    <div class="text-end">
+                                        <a th:href="@{/admin/messages/delete/{id}(id=${message.id})}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to delete this message?')"><i class="fas fa-trash me-2"></i>Delete Message</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div th:if="${#lists.isEmpty(messages)}" class="text-center text-muted p-3">
+                            No messages received yet.
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

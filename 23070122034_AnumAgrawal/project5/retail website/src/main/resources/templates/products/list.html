@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head('Products')}"></head>
+<body>
+    
+    <nav th:replace="~{layout :: sidebar('products')}"></nav>
+
+    <div class="main-content">
+        <header th:replace="~{layout :: top-header}"></header>
+
+        <div class="container-fluid p-0">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="text-dark font-weight-bold mb-0">Products Management</h2>
+                <a th:href="@{/products/new}" class="btn btn-primary"><i class="fas fa-plus me-2"></i> Add Product</a>
+            </div>
+            
+            <div class="table-container">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>SKU</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Stock</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="product : ${products}">
+                            <td th:text="${product.id}">1</td>
+                            <td th:text="${product.sku}">SKU-123</td>
+                            <td th:text="${product.name}">Product Name</td>
+                            <td th:text="${'$' + product.price}">$99.99</td>
+                            <td>
+                                <span th:text="${product.stockQuantity}" class="badge" th:classappend="${product.stockQuantity < 10 ? 'bg-danger' : 'bg-success'}">100</span>
+                            </td>
+                            <td>
+                                <a th:href="@{/products/edit/{id}(id=${product.id})}" class="btn btn-sm btn-info text-white"><i class="fas fa-edit"></i></a>
+                                <a th:href="@{/products/delete/{id}(id=${product.id})}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')"><i class="fas fa-trash"></i></a>
+                            </td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(products)}">
+                            <td colspan="6" class="text-center py-4 text-muted">No products found. Create one!</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{layout :: scripts}"></div>
+</body>
+</html>

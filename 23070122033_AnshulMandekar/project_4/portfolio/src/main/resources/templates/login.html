@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Admin Login')}"></head>
+<body>
+    <div class="particles-bg"></div>
+
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+    <section class="d-flex align-items-center" style="min-height: 100vh;">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6 col-lg-4" data-aos="zoom-in">
+                    <div class="glass-panel p-5 text-center">
+                        <i class="fas fa-user-shield fa-4x text-primary mb-4"></i>
+                        <h3 class="mb-4">Admin Login</h3>
+                        
+                        <div th:if="${param.error}" class="alert alert-danger bg-danger bg-opacity-25 text-danger border-danger">
+                            Invalid username and password.
+                        </div>
+                        <div th:if="${param.logout}" class="alert alert-success bg-success bg-opacity-25 text-success border-success">
+                            You have been logged out.
+                        </div>
+
+                        <form th:action="@{/login}" method="post">
+                            <div class="form-floating mb-3 text-start">
+                                <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
+                                <label for="username" class="text-muted">Username</label>
+                            </div>
+                            <div class="form-floating mb-4 text-start">
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                                <label for="password" class="text-muted">Password</label>
+                            </div>
+                            <button class="btn btn-primary w-100 py-2" type="submit">Sign In</button>
+                        </form>
+                        
+                        <div class="mt-4">
+                            <a href="/" class="text-muted text-decoration-none"><i class="fas fa-arrow-left me-2"></i>Back to Home</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

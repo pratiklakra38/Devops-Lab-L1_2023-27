@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apache-deployment
+  namespace: default
+  labels:
+    app: apache-server
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: apache-server
+  template:
+    metadata:
+      labels:
+        app: apache-server
+    spec:
+      containers:
+      - name: apache-server
+        image: httpd:2.4
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: apache-custom-index
+          mountPath: /usr/local/apache2/htdocs/index.html
+          subPath: index.html
+      volumes:
+      - name: apache-custom-index
+        configMap:
+          name: apache-config

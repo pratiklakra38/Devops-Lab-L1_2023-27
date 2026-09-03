@@ -1,0 +1,52 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKER_IMAGE = 'retail-management-system'
+        DOCKER_TAG = "v${env.BUILD_ID}"
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        
+        stage('Build & Test') {
+            steps {
+                sh './mvnw clean package'
+            }
+        }
+
+        stage('Security Scan - Trivy (Code)') {
+            steps {
+                sh 'trivy fs --severity HIGH,CRITICAL .'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh "docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} ."
+            }
+        }
+
+        stage('Security Scan - Docker Scout') {
+            steps {
+                sh "docker scout cves ${DOCKER_IMAGE}:${DOCKER_TAG}"
+            }
+        }
+
+        stage('Security Scan - Trivy (Image)') {
+            steps {
+                sh "trivy image --severity HIGH,CRITICAL ${DOCKER_IMAGE}:${DOCKER_TAG}"
+            }
+        }
+
+        stage('Deploy (Compose)') {
+            steps {
+                sh 'docker-compose up -d'
+            }
+        }
+    }
+}

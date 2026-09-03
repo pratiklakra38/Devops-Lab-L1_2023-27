@@ -13,8 +13,8 @@ pipeline {
 
                 deleteDir()
 
-                git branch: 'main',
-                    url: 'https://github.com/DhurvG/maven-distributed-pipeline'
+                git branch: 'Devops_LabL1_2023-27',
+                    url: 'https://github.com/aditisharmas11/Devops-Lab-L1_2023-27.git'
             }
         }
 
@@ -26,23 +26,22 @@ pipeline {
             steps {
                 echo "Compile running on ${env.NODE_NAME}"
 
-                bat '''
-                    set "JAVA_HOME=C:\\Program Files\\Eclipse Adoptium\\jdk-21.0.11.10-hotspot"
-                    set "PATH=%JAVA_HOME%\\bin;%PATH%"
+                dir('23070122091_DhruvGangurde/Project4/Project4_Jenkins_Scale/maven-project') {
 
-                    echo ===== JAVA VERSION =====
-                    java -version
+                    bat '''
+                        set "JAVA_HOME=C:\Program Files\Eclipse Adoptium\jdk-21.0.11.10-hotspot"
+                        set "PATH=%JAVA_HOME%\bin;%PATH%"
 
-                    echo ===== MAVEN VERSION =====
-                    mvn -version
+                        echo ===== JAVA VERSION =====
+                        java -version
 
-                    echo ===== MAVEN COMPILE =====
-                    mvn clean compile
-                '''
+                        echo ===== MAVEN VERSION =====
+                        mvn -version
 
-                stash name: 'compiled-project',
-                      includes: 'pom.xml,src/**,target/**',
-                      useDefaultExcludes: true
+                        echo ===== MAVEN COMPILE =====
+                        mvn clean compile
+                    '''
+                }
             }
         }
 
@@ -56,22 +55,39 @@ pipeline {
 
                 deleteDir()
 
-                unstash 'compiled-project'
+                git branch: 'Devops_LabL1_2023-27',
+                    url: 'https://github.com/aditisharmas11/Devops-Lab-L1_2023-27.git'
 
-                bat '''
-                    set "JAVA_HOME=C:\\Program Files\\Eclipse Adoptium\\jdk-21.0.11.10-hotspot"
-                    set "PATH=%JAVA_HOME%\\bin;%PATH%"
+                dir('23070122091_DhruvGangurde/Project4/Project4_Jenkins_Scale/maven-project') {
 
-                    echo ===== JAVA VERSION =====
-                    java -version
+                    bat '''
+                        set "JAVA_HOME=C:\Program Files\Eclipse Adoptium\jdk-21.0.11.10-hotspot"
+                        set "PATH=%JAVA_HOME%\bin;%PATH%"
 
-                    echo ===== MAVEN VERSION =====
-                    mvn -version
+                        echo ===== JAVA VERSION =====
+                        java -version
 
-                    echo ===== MAVEN TEST =====
-                    mvn test
-                '''
+                        echo ===== MAVEN VERSION =====
+                        mvn -version
+
+                        echo ===== MAVEN TEST =====
+                        mvn test
+                    '''
+                }
             }
+        }
+    }
+
+    post {
+        success {
+            echo "========================================="
+            echo "DISTRIBUTED MAVEN PIPELINE SUCCESSFUL"
+            echo "Compile Node and Test Node completed."
+            echo "========================================="
+        }
+
+        failure {
+            echo "DISTRIBUTED MAVEN PIPELINE FAILED"
         }
     }
 }

@@ -1,5 +1,10 @@
 # Assignment TW1.1 – Git Workflow & Collaboration
 
+## Student Details
+- **Name:** Avi S Gupta
+- **PRN:** 23070122060
+- **Course:** DevOps Lab L1 (2023–27)
+
 ## Objective
 The objective of this assignment is to understand the core concepts of version control using Git, including managing uncommitted changes, staging files, committing revisions, working with feature branches, merging updates, and resolving merge conflicts.
 

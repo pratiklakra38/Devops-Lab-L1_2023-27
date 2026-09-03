@@ -1,0 +1,75 @@
+pipeline {
+    agent none
+
+    tools {
+        maven 'Maven 3.9.16'
+        jdk 'JDK 21'
+    }
+
+    stages {
+
+        stage('Checkout') {
+            agent {
+                label 'compile'
+            }
+            steps {
+                checkout scm
+                stash name: 'source', includes: '**'
+            }
+        }
+
+        stage('Compile') {
+            agent {
+                label 'compile'
+            }
+            steps {
+                unstash 'source'
+                bat 'mvn clean compile'
+                stash name: 'workspace', includes: '**'
+            }
+        }
+
+        stage('Test') {
+            agent {
+                label 'test'
+            }
+            steps {
+                unstash 'workspace'
+                bat 'mvn test'
+            }
+            post {
+                always {
+                    junit 'target/surefire-reports/*.xml'
+                }
+            }
+        }
+
+        stage('Package') {
+            agent {
+                label 'compile'
+            }
+            steps {
+                unstash 'workspace'
+                bat 'mvn package -DskipTests'
+            }
+        }
+
+        stage('Archive Artifact') {
+            agent {
+                label 'compile'
+            }
+            steps {
+                archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Distributed Jenkins Pipeline executed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed!'
+        }
+    }
+}

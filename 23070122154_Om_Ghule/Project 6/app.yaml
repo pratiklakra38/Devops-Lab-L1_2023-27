@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: social-media-app
+  labels:
+    app: social-media
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: social-media
+  template:
+    metadata:
+      labels:
+        app: social-media
+    spec:
+      containers:
+        - name: social-media
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: 100m
+            limits:
+              cpu: 500m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: social-media-service
+spec:
+  type: NodePort
+  selector:
+    app: social-media
+  ports:
+    - port: 80
+      targetPort: 80

@@ -4,7 +4,8 @@ A customized Retail Management System built with Spring Boot 3, Java 21, Docker,
 
 ## Project Details
 - **Project:** Project 5 - DevOps
-- **Submitted By:** Harsh Rajput
+- **Submitted By:** Avi S Gupta
+- **PRN:** 23070122060
 - **Application Name:** RetailOps Console
 - **Domain:** Retail Management and Inventory Operations
 - **Purpose:** Demonstrate a full-stack retail application with containerization, CI/CD support, authentication, database integration, and security scanning documentation.

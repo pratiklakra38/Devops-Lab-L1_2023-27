@@ -10,4 +10,6 @@ COPY . .
 
 EXPOSE 4200
 
+# --host 0.0.0.0 makes the dev server reachable from outside the container.
+# The accepted Host headers are listed as "allowedHosts" in angular.json.
 CMD ["npm","start","--","--host","0.0.0.0"]

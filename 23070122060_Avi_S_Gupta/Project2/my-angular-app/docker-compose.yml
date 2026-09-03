@@ -1,24 +1,13 @@
-version: '3.8'
-
+# Development environment: Angular dev server with hot reload
 services:
-
   angular-app:
-
+    image: angular-app-dev:latest
+    container_name: angular-dev
     build:
-
       context: .
-
       dockerfile: Dockerfile.dev
-
     ports:
-
       - "4200:4200"
-
-    environment:
-      - NG_ALLOWED_HOSTS=localhost
-
     volumes:
-
       - .:/app
-
       - /app/node_modules

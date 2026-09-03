@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head('Customers')}"></head>
+<body>
+    
+    <nav th:replace="~{layout :: sidebar('customers')}"></nav>
+
+    <div class="main-content">
+        <header th:replace="~{layout :: top-header}"></header>
+
+        <div class="container-fluid p-0">
+            <h2 class="mb-4 text-dark font-weight-bold">Customer Management</h2>
+            
+            <div class="table-container">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Loyalty Points</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="customer : ${customers}">
+                            <td th:text="${customer.id}">1</td>
+                            <td th:text="${customer.firstName + ' ' + customer.lastName}">Name</td>
+                            <td th:text="${customer.user.email}">Email</td>
+                            <td th:text="${customer.phoneNumber}">Phone</td>
+                            <td>
+                                <span class="badge bg-success" th:text="${customer.loyaltyPoints}">0</span>
+                            </td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(customers)}">
+                            <td colspan="5" class="text-center py-4 text-muted">No customers found.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{layout :: scripts}"></div>
+</body>
+</html>

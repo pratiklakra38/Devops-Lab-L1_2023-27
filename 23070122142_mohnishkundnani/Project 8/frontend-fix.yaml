@@ -1,0 +1,169 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-nginx-config
+data:
+  nginx.conf: |
+    user  nginx;
+    worker_processes  auto;
+    error_log  /var/log/nginx/error.log warn;
+    pid        /var/run/nginx.pid;
+
+    events {
+      worker_connections 1024;
+    }
+
+    http {
+      include       /etc/nginx/mime.types;
+      default_type  application/octet-stream;
+      sendfile on;
+      keepalive_timeout 65;
+
+      server {
+        listen 80;
+        server_name _;
+        root /usr/share/nginx/html;
+        index index.html;
+
+        location / {
+          try_files $uri $uri/ /index.html;
+        }
+
+        location /api/ {
+          proxy_pass http://project8-backend-service:5000;
+          proxy_http_version 1.1;
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
+        }
+      }
+    }
+  index.html: |
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Project 8 Frontend</title>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            margin: 0;
+            padding: 40px;
+            color: #1f2937;
+          }
+          .card {
+            max-width: 760px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+          }
+          h1 {
+            margin-top: 0;
+            color: #111827;
+          }
+          .status {
+            margin-top: 12px;
+            padding: 12px 16px;
+            background: #ecfdf5;
+            border-left: 5px solid #10b981;
+            border-radius: 8px;
+          }
+          button {
+            margin-top: 16px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+          }
+          pre {
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="card">
+          <h1>Project 8 Microservices Dashboard</h1>
+          <div class="status">Frontend is running and proxying /api traffic to project8-backend-service:5000</div>
+          <button onclick="loadBackendData()">Load backend data</button>
+          <pre id="output">Waiting for data...</pre>
+        </div>
+
+        <script>
+          async function loadBackendData() {
+            const output = document.getElementById('output');
+            try {
+              const response = await fetch('/api/');
+              const data = await response.json();
+              output.textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+              output.textContent = 'Error fetching backend data: ' + error.message;
+            }
+          }
+        </script>
+      </body>
+    </html>
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: project8-frontend
+spec:
+  selector:
+    matchLabels:
+      app: project8-frontend
+  template:
+    metadata:
+      labels:
+        app: project8-frontend
+    spec:
+      containers:
+        - name: frontend
+          image: nginx:1.27-alpine
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: frontend-config
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+            - name: frontend-html
+              mountPath: /usr/share/nginx/html/index.html
+              subPath: index.html
+      volumes:
+        - name: frontend-config
+          configMap:
+            name: frontend-nginx-config
+            items:
+              - key: nginx.conf
+                path: nginx.conf
+        - name: frontend-html
+          configMap:
+            name: frontend-nginx-config
+            items:
+              - key: index.html
+                path: index.html
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: project8-frontend-service
+spec:
+  selector:
+    app: project8-frontend
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+      protocol: TCP
+  type: NodePort
+  nodePort: 30080

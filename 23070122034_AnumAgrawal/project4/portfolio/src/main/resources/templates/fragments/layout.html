@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title} + ' | Harsh Rajput - Portfolio'">Portfolio</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS Animation CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+    <!-- Navbar Fragment -->
+    <nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark glass-nav fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">Harsh <span>Rajput</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/#skills">Skills</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/#projects">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/#contact">Contact</a></li>
+                    <li class="nav-item" sec:authorize="isAuthenticated()"><a class="nav-link text-warning" href="/admin/dashboard">Admin Panel</a></li>
+                    <li class="nav-item" sec:authorize="!isAuthenticated()"><a class="nav-link" href="/login"><i class="fas fa-lock"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Footer Fragment -->
+    <footer th:fragment="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <div class="mb-3">
+                        <a href="https://github.com/Rajputsam" target="_blank" class="text-light me-3 fs-4"><i class="fab fa-github"></i></a>
+                        <a href="mailto:Rajputsam288@gmail.com" class="text-light me-3 fs-4"><i class="fas fa-envelope"></i></a>
+                    </div>
+                    <p class="mb-0 text-muted">&copy; <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2026</span> Harsh Rajput. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts Fragment -->
+    <th:block th:fragment="scripts">
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- AOS Animation JS -->
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <!-- Custom JS -->
+        <script th:src="@{/js/main.js}"></script>
+    </th:block>
+
+</body>
+</html>

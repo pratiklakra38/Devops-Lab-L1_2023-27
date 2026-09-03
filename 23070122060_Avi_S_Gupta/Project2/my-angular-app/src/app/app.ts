@@ -1,4 +1,5 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
@@ -8,5 +9,13 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('angular-docker-app');
+  private readonly document = inject(DOCUMENT);
+
+  /** Port 4200 is the Angular dev server container; port 80 is the Nginx production container. */
+  protected readonly environmentLabel =
+    this.document.location.port === '4200'
+      ? 'Development container (ng serve, hot reload)'
+      : 'Production container (Nginx)';
+
+  protected readonly renderedAt = new Date().toLocaleString();
 }

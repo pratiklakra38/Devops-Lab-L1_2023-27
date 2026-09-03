@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Manage Skills')}"></head>
+<body>
+    <div class="particles-bg"></div>
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+    <div class="container-fluid" style="padding-top: 80px;">
+        <div class="row">
+            <nav class="col-md-3 col-lg-2 d-md-block admin-sidebar glass-panel mt-3 ms-3 py-4">
+                <div class="position-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item"><a class="nav-link admin-nav-link" th:href="@{/admin/dashboard}"><i class="fas fa-tachometer-alt me-2"></i> Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link admin-nav-link" th:href="@{/admin/projects}"><i class="fas fa-project-diagram me-2"></i> Projects</a></li>
+                        <li class="nav-item"><a class="nav-link admin-nav-link active" th:href="@{/admin/skills}"><i class="fas fa-code me-2"></i> Skills</a></li>
+                        <li class="nav-item"><a class="nav-link admin-nav-link" th:href="@{/admin/messages}"><i class="fas fa-envelope me-2"></i> Messages</a></li>
+                    </ul>
+                </div>
+            </nav>
+
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4 border-bottom border-secondary">
+                    <h1 class="h2">Manage Skills</h1>
+                    <a th:href="@{/admin/skills/add}" class="btn btn-primary"><i class="fas fa-plus me-2"></i>Add Skill</a>
+                </div>
+
+                <div th:if="${success}" class="alert alert-success alert-dismissible fade show bg-success bg-opacity-25 text-success border-success" role="alert">
+                    <span th:text="${success}"></span>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+                <div class="glass-panel p-4">
+                    <div class="table-responsive">
+                        <table class="table table-glass table-hover align-middle">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Icon</th>
+                                    <th>Skill Name</th>
+                                    <th>Percentage</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="skill : ${skills}">
+                                    <td th:text="${skill.id}">1</td>
+                                    <td><i th:class="${skill.iconClass} + ' fa-2x text-primary'"></i></td>
+                                    <td th:text="${skill.name}">Java</td>
+                                    <td>
+                                        <div class="progress" style="height: 10px; width: 100px;">
+                                            <div class="progress-bar" role="progressbar" th:style="'width: ' + ${skill.percentage} + '%'"></div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a th:href="@{/admin/skills/edit/{id}(id=${skill.id})}" class="btn btn-sm btn-info text-white"><i class="fas fa-edit"></i></a>
+                                        <a th:href="@{/admin/skills/delete/{id}(id=${skill.id})}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')"><i class="fas fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                                <tr th:if="${#lists.isEmpty(skills)}">
+                                    <td colspan="5" class="text-center text-muted">No skills found.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

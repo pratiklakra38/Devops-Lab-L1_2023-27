@@ -1,0 +1,82 @@
+:host {
+  --ink: #12151c;
+  --muted: #5b6472;
+  --line: #e3e7ee;
+  --accent: #dd0031;
+  display: block;
+  min-height: 100vh;
+  background: #f6f7f9;
+  color: var(--ink);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+}
+
+.page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 2rem 1.25rem;
+}
+
+.card {
+  width: 100%;
+  max-width: 44rem;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 2.25rem 2rem;
+  box-shadow: 0 1px 2px rgb(18 21 28 / 6%), 0 12px 32px rgb(18 21 28 / 6%);
+}
+
+.eyebrow {
+  margin: 0 0 0.5rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+h1 {
+  margin: 0 0 0.75rem;
+  font-size: 1.9rem;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.lede {
+  margin: 0 0 1.75rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+
+dt {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+dd {
+  margin: 0.35rem 0 0;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.stamp {
+  margin: 1.5rem 0 0;
+  font-size: 0.8125rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}

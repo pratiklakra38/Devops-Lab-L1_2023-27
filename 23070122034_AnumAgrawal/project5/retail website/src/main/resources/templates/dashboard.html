@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head('Dashboard')}"></head>
+<body>
+    
+    <nav th:replace="~{layout :: sidebar('dashboard')}"></nav>
+
+    <div class="main-content">
+        <header th:replace="~{layout :: top-header}"></header>
+
+        <div class="container-fluid p-0">
+            <h2 class="mb-4 text-dark font-weight-bold">Dashboard Overview</h2>
+            
+            <div class="row mb-4">
+                <div class="col-md-3 col-sm-6 mb-3">
+                    <div class="stat-card">
+                        <i class="fas fa-box stat-icon"></i>
+                        <p>Total Products</p>
+                        <h3 th:text="${totalProducts}">0</h3>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-3">
+                    <div class="stat-card">
+                        <i class="fas fa-shopping-cart stat-icon"></i>
+                        <p>Total Orders</p>
+                        <h3 th:text="${totalOrders}">0</h3>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-3">
+                    <div class="stat-card">
+                        <i class="fas fa-users stat-icon"></i>
+                        <p>Total Customers</p>
+                        <h3 th:text="${totalCustomers}">0</h3>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-3">
+                    <div class="stat-card">
+                        <i class="fas fa-dollar-sign stat-icon text-success"></i>
+                        <p>Revenue</p>
+                        <h3>$<span th:text="${revenue}">0.00</span></h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-8 mb-4">
+                    <div class="table-container h-100">
+                        <h5 class="mb-3 font-weight-bold text-dark">Revenue Analytics</h5>
+                        <canvas id="revenueChart" height="100"></canvas>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="table-container h-100">
+                        <h5 class="mb-3 font-weight-bold text-dark">Recent Activity</h5>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item px-0 text-muted"><i class="fas fa-circle text-primary small me-2"></i> New order #1002 placed</li>
+                            <li class="list-group-item px-0 text-muted"><i class="fas fa-circle text-success small me-2"></i> User 'john_doe' registered</li>
+                            <li class="list-group-item px-0 text-muted"><i class="fas fa-circle text-warning small me-2"></i> Low stock: 'Gaming Laptop'</li>
+                            <li class="list-group-item px-0 text-muted"><i class="fas fa-circle text-info small me-2"></i> System update completed</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{layout :: scripts}"></div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var ctx = document.getElementById('revenueChart').getContext('2d');
+            var chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                    datasets: [{
+                        label: 'Revenue ($)',
+                        backgroundColor: 'rgba(67, 97, 238, 0.2)',
+                        borderColor: 'rgba(67, 97, 238, 1)',
+                        data: [1200, 1900, 3000, 5000, 2000, 3000, 4500],
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

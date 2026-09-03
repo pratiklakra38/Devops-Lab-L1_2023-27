@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head('Product Form')}"></head>
+<body>
+    
+    <nav th:replace="~{layout :: sidebar('products')}"></nav>
+
+    <div class="main-content">
+        <header th:replace="~{layout :: top-header}"></header>
+
+        <div class="container-fluid p-0">
+            <h2 class="mb-4 text-dark font-weight-bold" th:text="${product.id != null ? 'Edit Product' : 'Add New Product'}">Product Form</h2>
+            
+            <div class="table-container" style="max-width: 800px;">
+                <form th:action="@{/products}" th:object="${product}" method="post">
+                    <input type="hidden" th:field="*{id}" />
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Product Name</label>
+                            <input type="text" class="form-control" th:field="*{name}" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">SKU</label>
+                            <input type="text" class="form-control" th:field="*{sku}" required>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Price ($)</label>
+                            <input type="number" step="0.01" class="form-control" th:field="*{price}" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Stock Quantity</label>
+                            <input type="number" class="form-control" th:field="*{stockQuantity}" required>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Image URL</label>
+                        <input type="url" class="form-control" th:field="*{imageUrl}">
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-control" rows="4" th:field="*{description}"></textarea>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <a th:href="@{/products}" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Save Product</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{layout :: scripts}"></div>
+</body>
+</html>

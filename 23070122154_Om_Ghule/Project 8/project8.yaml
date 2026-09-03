@@ -1,0 +1,370 @@
+# ============================================================
+# PROJECT 8
+# Complete application with 4 microservices
+# Frontend + Backend + Flask + Redis
+# Includes ConfigMaps and Secret
+# ============================================================
+
+# ------------------------------------------------------------
+# CONFIGMAP
+# ------------------------------------------------------------
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  APP_ENV: "development"
+  REDIS_HOST: "project8-redis-service"
+  REDIS_PORT: "6379"
+
+---
+# ------------------------------------------------------------
+# SECRET
+# ------------------------------------------------------------
+apiVersion: v1
+kind: Secret
+metadata:
+  name: app-secret
+type: Opaque
+stringData:
+  DB_USERNAME: "admin"
+  DB_PASSWORD: "password123"
+
+---
+# ------------------------------------------------------------
+# FRONTEND CONFIGMAP
+# NGINX configuration + HTML page
+# ------------------------------------------------------------
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-config
+data:
+
+  default.conf: |
+    server {
+        listen 80;
+
+        location / {
+            root /usr/share/nginx/html;
+            index index.html;
+        }
+
+        location /api/ {
+            proxy_pass http://project8-backend-service:5000/;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+        }
+    }
+
+  index.html: |
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Project 8 Microservices</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 40px;
+            }
+
+            h1 {
+                color: #333;
+            }
+
+            button {
+                padding: 10px 20px;
+                font-size: 16px;
+                cursor: pointer;
+            }
+
+            #result {
+                margin-top: 20px;
+                padding: 15px;
+                border: 1px solid #ccc;
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <h1>Hello from Project 8 Frontend</h1>
+
+        <p>
+            Kubernetes Microservices Application
+        </p>
+
+        <button onclick="checkBackend()">
+            Check Backend
+        </button>
+
+        <div id="result">
+            Backend status will appear here.
+        </div>
+
+        <script>
+            async function checkBackend() {
+                const result = document.getElementById("result");
+
+                try {
+                    const response = await fetch("/api/");
+
+                    if (!response.ok) {
+                        throw new Error("Backend returned HTTP " + response.status);
+                    }
+
+                    const text = await response.text();
+
+                    result.innerHTML =
+                        "<b>Backend Connected Successfully!</b><br>" +
+                        text;
+
+                } catch (error) {
+
+                    result.innerHTML =
+                        "<b>Backend unavailable</b><br>" +
+                        error;
+                }
+            }
+        </script>
+
+    </body>
+    </html>
+
+---
+# ------------------------------------------------------------
+# FRONTEND DEPLOYMENT
+# ------------------------------------------------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: project8-frontend
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: project8-frontend
+
+  template:
+    metadata:
+      labels:
+        app: project8-frontend
+
+    spec:
+      containers:
+        - name: frontend
+          image: nginx:latest
+
+          ports:
+            - containerPort: 80
+
+          volumeMounts:
+
+            - name: nginx-config
+              mountPath: /etc/nginx/conf.d/default.conf
+              subPath: default.conf
+
+            - name: frontend-html
+              mountPath: /usr/share/nginx/html/index.html
+              subPath: index.html
+
+      volumes:
+
+        - name: nginx-config
+          configMap:
+            name: frontend-config
+
+        - name: frontend-html
+          configMap:
+            name: frontend-config
+
+---
+# ------------------------------------------------------------
+# FRONTEND SERVICE
+# ------------------------------------------------------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: project8-frontend-service
+spec:
+  type: NodePort
+
+  selector:
+    app: project8-frontend
+
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 30080
+
+---
+# ------------------------------------------------------------
+# BACKEND DEPLOYMENT
+# ------------------------------------------------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: project8-backend
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: project8-backend
+
+  template:
+    metadata:
+      labels:
+        app: project8-backend
+
+    spec:
+      containers:
+        - name: backend
+          image: ohmschrodinger/backend:v1
+
+          ports:
+            - containerPort: 5000
+
+          env:
+            - name: APP_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: APP_ENV
+
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: DB_USERNAME
+
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: DB_PASSWORD
+
+---
+# ------------------------------------------------------------
+# BACKEND SERVICE
+# ------------------------------------------------------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: project8-backend-service
+spec:
+  type: ClusterIP
+
+  selector:
+    app: project8-backend
+
+  ports:
+    - port: 5000
+      targetPort: 5000
+
+---
+# ------------------------------------------------------------
+# FLASK DEPLOYMENT
+# ------------------------------------------------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: project8-flask
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: project8-flask
+
+  template:
+    metadata:
+      labels:
+        app: project8-flask
+
+    spec:
+      containers:
+        - name: flask
+          image: devops-flask-app:latest
+          imagePullPolicy: Never
+
+          ports:
+            - containerPort: 5000
+
+          env:
+            - name: REDIS_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: REDIS_HOST
+
+            - name: REDIS_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: REDIS_PORT
+
+---
+# ------------------------------------------------------------
+# FLASK SERVICE
+# ------------------------------------------------------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: project8-flask-service
+spec:
+  type: ClusterIP
+
+  selector:
+    app: project8-flask
+
+  ports:
+    - port: 5000
+      targetPort: 5000
+
+---
+# ------------------------------------------------------------
+# REDIS DEPLOYMENT
+# ------------------------------------------------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: project8-redis
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: project8-redis
+
+  template:
+    metadata:
+      labels:
+        app: project8-redis
+
+    spec:
+      containers:
+        - name: redis
+          image: redis:latest
+
+          ports:
+            - containerPort: 6379
+
+---
+# ------------------------------------------------------------
+# REDIS SERVICE
+# ------------------------------------------------------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: project8-redis-service
+spec:
+  type: ClusterIP
+
+  selector:
+    app: project8-redis
+
+  ports:
+    - port: 6379
+      targetPort: 6379

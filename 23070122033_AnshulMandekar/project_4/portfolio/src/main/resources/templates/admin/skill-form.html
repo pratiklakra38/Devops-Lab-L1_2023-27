@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(${skill.id == null ? 'Add Skill' : 'Edit Skill'})}"></head>
+<body>
+    <div class="particles-bg"></div>
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+    <div class="container-fluid" style="padding-top: 80px;">
+        <div class="row">
+            <nav class="col-md-3 col-lg-2 d-md-block admin-sidebar glass-panel mt-3 ms-3 py-4">
+                <div class="position-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item"><a class="nav-link admin-nav-link" th:href="@{/admin/dashboard}">Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link admin-nav-link active" th:href="@{/admin/skills}">Skills</a></li>
+                    </ul>
+                </div>
+            </nav>
+
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4 border-bottom border-secondary">
+                    <h1 class="h2" th:text="${skill.id == null ? 'Add Skill' : 'Edit Skill'}">Skill</h1>
+                    <a th:href="@{/admin/skills}" class="btn btn-outline-light"><i class="fas fa-arrow-left me-2"></i>Back</a>
+                </div>
+
+                <div class="glass-panel p-5">
+                    <form th:action="@{/admin/skills/save}" th:object="${skill}" method="post">
+                        <input type="hidden" th:field="*{id}">
+                        
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label text-muted">Skill Name</label>
+                                <input type="text" class="form-control" th:field="*{name}" required>
+                                <div class="text-danger small" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label class="form-label text-muted">Proficiency Percentage (0-100)</label>
+                                <input type="number" class="form-control" th:field="*{percentage}" min="0" max="100" required>
+                                <div class="text-danger small" th:if="${#fields.hasErrors('percentage')}" th:errors="*{percentage}"></div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label text-muted">FontAwesome Icon Class (e.g. 'fab fa-java')</label>
+                                <input type="text" class="form-control" th:field="*{iconClass}">
+                                <small class="text-muted d-block mt-1">Search for icons at <a href="https://fontawesome.com/icons" target="_blank" class="text-primary">FontAwesome</a></small>
+                            </div>
+                            
+                            <div class="col-12 mt-4">
+                                <button type="submit" class="btn btn-primary"><i class="fas fa-save me-2"></i>Save Skill</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

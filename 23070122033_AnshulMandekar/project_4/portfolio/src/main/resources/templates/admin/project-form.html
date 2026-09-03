@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(${project.id == null ? 'Add Project' : 'Edit Project'})}"></head>
+<body>
+    <div class="particles-bg"></div>
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+    <div class="container-fluid" style="padding-top: 80px;">
+        <div class="row">
+            <nav class="col-md-3 col-lg-2 d-md-block admin-sidebar glass-panel mt-3 ms-3 py-4">
+                <div class="position-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item"><a class="nav-link admin-nav-link" th:href="@{/admin/dashboard}">Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link admin-nav-link active" th:href="@{/admin/projects}">Projects</a></li>
+                    </ul>
+                </div>
+            </nav>
+
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4 border-bottom border-secondary">
+                    <h1 class="h2" th:text="${project.id == null ? 'Add Project' : 'Edit Project'}">Project</h1>
+                    <a th:href="@{/admin/projects}" class="btn btn-outline-light"><i class="fas fa-arrow-left me-2"></i>Back</a>
+                </div>
+
+                <div class="glass-panel p-5">
+                    <form th:action="@{/admin/projects/save}" th:object="${project}" method="post">
+                        <input type="hidden" th:field="*{id}">
+                        
+                        <div class="row g-3">
+                            <div class="col-md-12">
+                                <label class="form-label text-muted">Project Title</label>
+                                <input type="text" class="form-control" th:field="*{title}" required>
+                                <div class="text-danger small" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+                            </div>
+                            
+                            <div class="col-md-12">
+                                <label class="form-label text-muted">Description</label>
+                                <textarea class="form-control" th:field="*{description}" rows="4" required></textarea>
+                                <div class="text-danger small" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label text-muted">Technology Stack (Comma separated)</label>
+                                <input type="text" class="form-control" th:field="*{technologyStack}">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label text-muted">GitHub URL</label>
+                                <input type="text" class="form-control" th:field="*{githubUrl}">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label text-muted">Demo URL</label>
+                                <input type="text" class="form-control" th:field="*{demoUrl}">
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="form-label text-muted">Image URL</label>
+                                <input type="text" class="form-control" th:field="*{imageUrl}">
+                            </div>
+                            
+                            <div class="col-12 mt-4">
+                                <button type="submit" class="btn btn-primary"><i class="fas fa-save me-2"></i>Save Project</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

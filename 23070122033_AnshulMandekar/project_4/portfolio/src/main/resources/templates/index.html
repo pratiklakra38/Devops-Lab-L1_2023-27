@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Home')}"></head>
+<body>
+    <div class="particles-bg"></div>
+
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 hero-content" data-aos="fade-right">
+                    <h5 class="text-primary fw-bold mb-3">Hello, I'm</h5>
+                    <h1>Anshul Ravindra Mandekar</h1>
+                    <div class="typing-text mb-4">Software Development Engineer</div>
+                    <p class="text-muted mb-4 fs-5">Strong foundations in OOP and DSA, backed by MERN Stack & Cloud internship experience, SCI-indexed publication, and Rank 1 at Industry Conclave 2026.</p>
+                    <div class="d-flex flex-wrap gap-2">
+                        <a href="#projects" class="btn btn-primary"><i class="fas fa-project-diagram me-2"></i>View Projects</a>
+                        <a href="https://portfolio-website-anshul-1.onrender.com/anshul.html" target="_blank" class="btn btn-outline-light"><i class="fas fa-globe me-2"></i>Live CV Site</a>
+                        <a href="https://github.com/AnshulMandekar" target="_blank" class="btn btn-outline-primary"><i class="fab fa-github me-2"></i>GitHub</a>
+                    </div>
+                </div>
+                <div class="col-lg-6 mt-5 mt-lg-0 text-center" data-aos="fade-left">
+                    <div class="profile-img-container">
+                        <img th:src="@{/images/profile.jpg}" onerror="this.src='https://ui-avatars.com/api/?name=Anshul+Mandekar&size=300&background=1e293b&color=3b82f6'" alt="Anshul Ravindra Mandekar" class="profile-img">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="bg-dark bg-opacity-50 py-5">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>About Me & Experience</h2>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <div class="glass-panel p-4 h-100">
+                        <h4 class="mb-4 text-primary"><i class="fas fa-user-graduate me-2"></i>Education</h4>
+                        <div class="timeline">
+                            <div class="timeline-item mb-4">
+                                <h5 class="mb-1">B.Tech in Computer Science and Engineering</h5>
+                                <p class="text-primary mb-1">Symbiosis Institute of Technology, Pune</p>
+                                <p class="text-muted mb-2"><i class="far fa-calendar-alt me-2"></i>08/2023 – 05/2027</p>
+                                <p class="mb-0"><strong>CGPA:</strong> 7.45</p>
+                            </div>
+                            <div class="timeline-item mb-4">
+                                <h5 class="mb-1">Class XII (CBSE) – Senior Secondary</h5>
+                                <p class="text-primary mb-1">School of Scholars, Nagpur (Atrey Layout)</p>
+                                <p class="text-muted mb-2"><i class="far fa-calendar-alt me-2"></i>2021 – 2023</p>
+                                <p class="mb-0"><strong>Score:</strong> 83%</p>
+                            </div>
+                            <div class="timeline-item">
+                                <h5 class="mb-1">Class X (CBSE) – Secondary</h5>
+                                <p class="text-primary mb-1">School of Scholars, Nagpur (Beltarodi)</p>
+                                <p class="text-muted mb-2"><i class="far fa-calendar-alt me-2"></i>2020 – 2021</p>
+                                <p class="mb-0"><strong>Score:</strong> 89%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="glass-panel p-4 h-100">
+                        <h4 class="mb-4 text-primary"><i class="fas fa-briefcase me-2"></i>Experience</h4>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <h5 class="mb-1">Software Development Intern — MERN Stack & Cloud</h5>
+                                <p class="text-primary mb-1">Yellow Cube, Navi Mumbai</p>
+                                <p class="text-muted mb-2"><i class="far fa-calendar-alt me-2"></i>01/2025 – 07/2025</p>
+                                <p class="badge bg-secondary mb-2">Node.js • Express • MongoDB/Mongoose • JWT • AWS EC2 • Socket.IO</p>
+                                <ul class="text-muted small mt-2 ps-3">
+                                    <li>Designed and maintained 35+ RESTful API endpoints for a role-based CRM covering user management, permissions, reporting, and audit logs; sustained ~120ms avg response time and P95 latency &lt;340ms in production.</li>
+                                    <li>Implemented JWT-based authentication and RBAC, securing multi-service platforms (Twilio, Cloudinary, Nodemailer, Google Sheets) using IAM roles, AWS Parameter Store secrets, and security groups.</li>
+                                    <li>Deployed & operated on AWS EC2 (t3.small, Mumbai) behind ELB with Auto Scaling (1-4 instances), sustaining 99% uptime for 200+ active users.</li>
+                                    <li>Built a real-time scheduling module using WebSockets (Socket.IO) handling 50+ concurrent appointments with sub-200ms event propagation, cutting booking conflicts by 60%.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Achievements & Certifications Row -->
+            <div class="row g-4 mt-3">
+                <div class="col-lg-6" data-aos="fade-up">
+                    <div class="glass-panel p-4 h-100">
+                        <h4 class="mb-3 text-primary"><i class="fas fa-trophy me-2"></i>Achievements & Publications</h4>
+                        <ul class="list-group list-group-flush bg-transparent">
+                            <li class="list-group-item bg-transparent text-light border-secondary"><i class="fas fa-award text-warning me-2"></i><strong>1st Rank:</strong> PBL-2 Industry Conclave 2026 (SIT Pune)</li>
+                            <li class="list-group-item bg-transparent text-light border-secondary"><i class="fas fa-file-alt text-info me-2"></i><strong>Publications:</strong> SCI-indexed publication on Urban Digital Twin & Research paper for SCWRM</li>
+                            <li class="list-group-item bg-transparent text-light border-secondary"><i class="fas fa-star text-success me-2"></i><strong>Hackathons:</strong> 2× SIH Qualifier & Deloitte Hacksplosion 2026 Level 2</li>
+                            <li class="list-group-item bg-transparent text-light border-secondary"><i class="fas fa-code text-primary me-2"></i><strong>Competitive Coding:</strong> 200+ LeetCode DSA problems solved</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="glass-panel p-4 h-100">
+                        <h4 class="mb-3 text-primary"><i class="fas fa-certificate me-2"></i>Certifications</h4>
+                        <ul class="list-group list-group-flush bg-transparent">
+                            <li class="list-group-item bg-transparent text-light border-secondary"><i class="fas fa-check-circle text-primary me-2"></i>Nutanix-NCA Accelerator Program</li>
+                            <li class="list-group-item bg-transparent text-light border-secondary"><i class="fas fa-check-circle text-primary me-2"></i>Full Stack Generative AI – Udemy (2026)</li>
+                            <li class="list-group-item bg-transparent text-light border-secondary"><i class="fas fa-check-circle text-primary me-2"></i>ML A-Z – Udemy (2026)</li>
+                            <li class="list-group-item bg-transparent text-light border-secondary"><i class="fas fa-check-circle text-primary me-2"></i>Delta Full Stack – Apna College (2025)</li>
+                            <li class="list-group-item bg-transparent text-light border-secondary"><i class="fas fa-check-circle text-primary me-2"></i>Community Engagement – MichiganX / edX (2026)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>My Skills</h2>
+            </div>
+            <div class="row g-4">
+                <!-- If skills are loaded from DB -->
+                <div class="col-md-4 col-lg-3" th:each="skill, iterStat : ${skills}" th:attr="data-aos=${iterStat.index % 2 == 0 ? 'fade-up' : 'fade-down'}" data-aos-delay="100">
+                    <div class="glass-panel skill-card">
+                        <i th:class="${skill.iconClass}"></i>
+                        <h5 th:text="${skill.name}">Skill Name</h5>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" th:attr="aria-valuenow=${skill.percentage}" th:style="'width: 0%'" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <div class="text-end text-muted small mt-1" th:text="${skill.percentage} + '%'">100%</div>
+                    </div>
+                </div>
+                <!-- Fallback if DB is empty -->
+                <div class="col-12 text-center text-muted" th:if="${#lists.isEmpty(skills)}">
+                    <p>No skills added yet. Login to Admin Panel to add skills.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="bg-dark bg-opacity-50">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Featured Projects</h2>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6" th:each="project, iterStat : ${projects}" data-aos="zoom-in" th:attr="data-aos-delay=${iterStat.index * 100}">
+                    <div class="card glass-panel custom-card">
+                        <img th:if="${project.imageUrl != null and !project.imageUrl.empty}" th:src="${project.imageUrl}" class="card-img-top" th:alt="${project.title}">
+                        <div th:unless="${project.imageUrl != null and !project.imageUrl.empty}" class="card-img-top d-flex align-items-center justify-content-center bg-secondary bg-opacity-25">
+                            <i class="fas fa-laptop-code fa-4x text-muted"></i>
+                        </div>
+                        <div class="card-body p-4 flex-grow-1 d-flex flex-column">
+                            <h4 class="card-title text-primary mb-3" th:text="${project.title}">Project Title</h4>
+                            <p class="card-text text-muted mb-4 flex-grow-1" th:text="${project.description}">Project description goes here...</p>
+                            
+                            <div class="mb-4">
+                                <span class="badge bg-primary bg-opacity-25 text-primary border border-primary rounded-pill px-3 py-2 me-1 mb-1" 
+                                      th:each="tech : ${#strings.arraySplit(project.technologyStack, ',')}" 
+                                      th:text="${#strings.trim(tech)}">Tech</span>
+                            </div>
+                            
+                            <div class="d-flex justify-content-between mt-auto">
+                                <a th:if="${project.githubUrl != null and !project.githubUrl.empty}" th:href="${project.githubUrl}" target="_blank" class="btn btn-outline-light btn-sm"><i class="fab fa-github me-2"></i>Code</a>
+                                <a th:if="${project.demoUrl != null and !project.demoUrl.empty}" th:href="${project.demoUrl}" target="_blank" class="btn btn-primary btn-sm"><i class="fas fa-external-link-alt me-2"></i>Live Demo</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 text-center text-muted" th:if="${#lists.isEmpty(projects)}">
+                    <p>No projects added yet. Login to Admin Panel to add projects.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Get In Touch</h2>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8" data-aos="fade-up">
+                    <div class="glass-panel p-5">
+                        
+                        <div th:if="${success}" class="alert alert-success alert-dismissible fade show bg-success bg-opacity-25 text-success border-success" role="alert">
+                            <i class="fas fa-check-circle me-2"></i><span th:text="${success}"></span>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        
+                        <div th:if="${error}" class="alert alert-danger alert-dismissible fade show bg-danger bg-opacity-25 text-danger border-danger" role="alert">
+                            <i class="fas fa-exclamation-circle me-2"></i><span th:text="${error}"></span>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+
+                        <form th:action="@{/contact}" th:object="${messageDTO}" method="post">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Name" required>
+                                        <label for="name" class="text-muted">Your Name</label>
+                                        <div class="text-danger small mt-1" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="email" class="form-control" id="email" th:field="*{email}" placeholder="Email" required>
+                                        <label for="email" class="text-muted">Your Email</label>
+                                        <div class="text-danger small mt-1" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="phone" th:field="*{phone}" placeholder="Phone">
+                                        <label for="phone" class="text-muted">Phone Number (Optional)</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-floating mb-4">
+                                        <textarea class="form-control" id="content" th:field="*{content}" placeholder="Message" style="height: 150px" required></textarea>
+                                        <label for="content" class="text-muted">Your Message</label>
+                                        <div class="text-danger small mt-1" th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></div>
+                                    </div>
+                                </div>
+                                <div class="col-12 text-center">
+                                    <button type="submit" class="btn btn-primary btn-lg px-5"><i class="fas fa-paper-plane me-2"></i>Send Message</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer th:replace="~{fragments/layout :: footer}"></footer>
+    <th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

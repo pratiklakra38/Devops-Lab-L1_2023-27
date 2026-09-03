@@ -1,5 +1,10 @@
 # Project 3: Branching Development Model
 
+## Student Details
+- **Name:** Avi S Gupta
+- **PRN:** 23070122060
+- **Course:** DevOps Lab L1 (2023–27)
+
 ## Objective
 
 To demonstrate a Git branching strategy for collaborative software development.

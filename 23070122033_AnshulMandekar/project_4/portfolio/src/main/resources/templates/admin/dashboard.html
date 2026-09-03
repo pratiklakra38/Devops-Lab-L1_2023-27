@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Admin Dashboard')}"></head>
+<body>
+    <div class="particles-bg"></div>
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+    <div class="container-fluid" style="padding-top: 80px;">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="col-md-3 col-lg-2 d-md-block admin-sidebar glass-panel mt-3 ms-3 py-4">
+                <div class="position-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link admin-nav-link active" th:href="@{/admin/dashboard}">
+                                <i class="fas fa-tachometer-alt me-2"></i> Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link admin-nav-link" th:href="@{/admin/projects}">
+                                <i class="fas fa-project-diagram me-2"></i> Projects
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link admin-nav-link" th:href="@{/admin/skills}">
+                                <i class="fas fa-code me-2"></i> Skills
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link admin-nav-link" th:href="@{/admin/messages}">
+                                <i class="fas fa-envelope me-2"></i> Messages
+                            </a>
+                        </li>
+                        <li class="nav-item mt-5">
+                            <form th:action="@{/logout}" method="post">
+                                <button type="submit" class="nav-link admin-nav-link text-danger w-100 text-start border-0 bg-transparent">
+                                    <i class="fas fa-sign-out-alt me-2"></i> Logout
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Main content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4 border-bottom border-secondary">
+                    <h1 class="h2">Dashboard</h1>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="glass-panel p-4 text-center">
+                            <h5 class="text-muted">Total Projects</h5>
+                            <h2 class="display-4 text-primary" th:text="${projectCount}">0</h2>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="glass-panel p-4 text-center">
+                            <h5 class="text-muted">Total Skills</h5>
+                            <h2 class="display-4 text-primary" th:text="${skillCount}">0</h2>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="glass-panel p-4 text-center">
+                            <h5 class="text-muted">New Messages</h5>
+                            <h2 class="display-4 text-primary" th:text="${messageCount}">0</h2>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

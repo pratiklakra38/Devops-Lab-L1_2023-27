@@ -1,5 +1,10 @@
 # Assignment TW1.3 – Docker and Jenkins Automation
 
+## Student Details
+- **Name:** Avi S Gupta
+- **PRN:** 23070122060
+- **Course:** DevOps Lab L1 (2023–27)
+
 ## Objective
 The objective of this assignment is to dockerize a web application, verify its container status, run it locally, and automate its build process using a Jenkins CI/CD pipeline.
 

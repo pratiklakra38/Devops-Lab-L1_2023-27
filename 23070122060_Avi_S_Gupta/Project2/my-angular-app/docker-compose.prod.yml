@@ -1,15 +1,10 @@
-version: '3.8'
-
+# Production environment: multi-stage build served by Nginx
 services:
-
   angular-app:
-
+    image: angular-app-prod:latest
+    container_name: angular-prod
     build:
-
       context: .
-
       dockerfile: Dockerfile
-
     ports:
-
       - "80:80"

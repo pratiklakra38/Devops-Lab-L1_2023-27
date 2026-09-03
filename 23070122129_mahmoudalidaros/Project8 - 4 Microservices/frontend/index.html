@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevOps E-Commerce Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-icon">⚡</span>
+                <span class="logo-text">DevOps E-Commerce</span>
+            </div>
+            <div class="nav-menu">
+                <a href="#hero" class="nav-link">Home</a>
+                <a href="#products" class="nav-link">Products</a>
+                <a href="#orders" class="nav-link">Orders</a>
+                <a href="#users" class="nav-link">Users</a>
+                <a href="#services" class="nav-link">Services</a>
+            </div>
+            <div class="nav-actions">
+                <button class="btn btn-outline">Login</button>
+                <button class="btn btn-primary">Sign Up</button>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">Modern E-Commerce Platform</h1>
+                <p class="hero-description">
+                    A DevOps-powered e-commerce solution built with scalability, 
+                    reliability, and performance in mind. Deployed on Kubernetes 
+                    with automated CI/CD pipelines.
+                </p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary btn-large">Get Started</button>
+                    <button class="btn btn-outline btn-large">View Demo</button>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">99.9%</span>
+                        <span class="stat-label">Uptime</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">50K+</span>
+                        <span class="stat-label">Products</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">10K+</span>
+                        <span class="stat-label">Daily Orders</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="section" id="products">
+        <div class="container">
+            <h2 class="section-title">Featured Products</h2>
+            <p class="section-subtitle">Premium tech products for modern professionals</p>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image">
+                        <span class="product-icon">💻</span>
+                        <div class="product-badge">Best Seller</div>
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-title">UltraBook Pro 15</h3>
+                        <p class="product-description">High-performance laptop with M3 chip, 32GB RAM, and 1TB SSD storage.</p>
+                        <div class="product-meta">
+                            <span class="product-price">$1,499.00</span>
+                            <span class="product-rating">★★★★★ 4.9</span>
+                        </div>
+                        <button class="btn btn-primary btn-block">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <span class="product-icon">🖱️</span>
+                        <div class="product-badge">New</div>
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-title">Precision Wireless Mouse</h3>
+                        <p class="product-description">Ergonomic wireless mouse with 8KHz polling rate and 6 programmable buttons.</p>
+                        <div class="product-meta">
+                            <span class="product-price">$89.99</span>
+                            <span class="product-rating">★★★★☆ 4.7</span>
+                        </div>
+                        <button class="btn btn-primary btn-block">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <span class="product-icon">⌨️</span>
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-title">Mechanical RGB Keyboard</h3>
+                        <p class="product-description">Cherry MX switches, per-key RGB lighting, aircraft-grade aluminum frame.</p>
+                        <div class="product-meta">
+                            <span class="product-price">$159.99</span>
+                            <span class="product-rating">★★★★★ 4.8</span>
+                        </div>
+                        <button class="btn btn-primary btn-block">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <span class="product-icon">📱</span>
+                        <div class="product-badge">Hot</div>
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-title">SmartPhone X Pro</h3>
+                        <p class="product-description">6.7" AMOLED display, 50MP camera, 5G connectivity, 256GB storage.</p>
+                        <div class="product-meta">
+                            <span class="product-price">$999.00</span>
+                            <span class="product-rating">★★★★☆ 4.6</span>
+                        </div>
+                        <button class="btn btn-primary btn-block">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Orders Section -->
+    <section class="section" id="orders">
+        <div class="container">
+            <h2 class="section-title">Recent Orders</h2>
+            <p class="section-subtitle">Track your orders and shipments in real-time</p>
+            <div class="orders-container">
+                <div class="order-card">
+                    <div class="order-header">
+                        <span class="order-id">#ORD-2024-001</span>
+                        <span class="order-status status-completed">Delivered</span>
+                    </div>
+                    <div class="order-content">
+                        <p class="order-items">UltraBook Pro 15 × 1, Precision Mouse × 2</p>
+                        <div class="order-meta">
+                            <span class="order-date">2024-01-15</span>
+                            <span class="order-amount">$1,678.98</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-card">
+                    <div class="order-header">
+                        <span class="order-id">#ORD-2024-002</span>
+                        <span class="order-status status-shipping">Shipping</span>
+                    </div>
+                    <div class="order-content">
+                        <p class="order-items">Mechanical Keyboard × 1, SmartPhone X × 1</p>
+                        <div class="order-meta">
+                            <span class="order-date">2024-01-14</span>
+                            <span class="order-amount">$1,158.99</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-card">
+                    <div class="order-header">
+                        <span class="order-id">#ORD-2024-003</span>
+                        <span class="order-status status-pending">Pending</span>
+                    </div>
+                    <div class="order-content">
+                        <p class="order-items">UltraBook Pro 15 × 1</p>
+                        <div class="order-meta">
+                            <span class="order-date">2024-01-13</span>
+                            <span class="order-amount">$1,499.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Users Section -->
+    <section class="section" id="users">
+        <div class="container">
+            <h2 class="section-title">Active Users</h2>
+            <p class="section-subtitle">Our growing community of tech enthusiasts</p>
+            <div class="users-grid">
+                <div class="user-card">
+                    <div class="user-avatar">JD</div>
+                    <div class="user-info">
+                        <h3 class="user-name">John Doe</h3>
+                        <p class="user-role">Senior DevOps Engineer</p>
+                    </div>
+                    <div class="user-stats">
+                        <span class="user-orders">42 orders</span>
+                    </div>
+                </div>
+                <div class="user-card">
+                    <div class="user-avatar">AS</div>
+                    <div class="user-info">
+                        <h3 class="user-name">Alice Smith</h3>
+                        <p class="user-role">Cloud Architect</p>
+                    </div>
+                    <div class="user-stats">
+                        <span class="user-orders">38 orders</span>
+                    </div>
+                </div>
+                <div class="user-card">
+                    <div class="user-avatar">RW</div>
+                    <div class="user-info">
+                        <h3 class="user-name">Robert Wilson</h3>
+                        <p class="user-role">SRE Specialist</p>
+                    </div>
+                    <div class="user-stats">
+                        <span class="user-orders">56 orders</span>
+                    </div>
+                </div>
+                <div class="user-card">
+                    <div class="user-avatar">EK</div>
+                    <div class="user-info">
+                        <h3 class="user-name">Emma Kim</h3>
+                        <p class="user-role">Platform Engineer</p>
+                    </div>
+                    <div class="user-stats">
+                        <span class="user-orders">29 orders</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Services Status Section -->
+    <section class="section" id="services">
+        <div class="container">
+            <h2 class="section-title">Service Status</h2>
+            <p class="section-subtitle">Kubernetes cluster health and service availability</p>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-header">
+                        <span class="service-icon">📦</span>
+                        <h3 class="service-title">Product Service</h3>
+                    </div>
+                    <div class="service-status">
+                        <span class="status-badge status-online">Online</span>
+                    </div>
+                    <div class="service-metrics">
+                        <div class="metric">
+                            <span class="metric-label">Uptime</span>
+                            <span class="metric-value">99.98%</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Latency</span>
+                            <span class="metric-value">12ms</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-header">
+                        <span class="service-icon">📋</span>
+                        <h3 class="service-title">Order Service</h3>
+                    </div>
+                    <div class="service-status">
+                        <span class="status-badge status-online">Online</span>
+                    </div>
+                    <div class="service-metrics">
+                        <div class="metric">
+                            <span class="metric-label">Uptime</span>
+                            <span class="metric-value">99.95%</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Latency</span>
+                            <span class="metric-value">18ms</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-header">
+                        <span class="service-icon">👥</span>
+                        <h3 class="service-title">User Service</h3>
+                    </div>
+                    <div class="service-status">
+                        <span class="status-badge status-online">Online</span>
+                    </div>
+                    <div class="service-metrics">
+                        <div class="metric">
+                            <span class="metric-label">Uptime</span>
+                            <span class="metric-value">99.99%</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Latency</span>
+                            <span class="metric-value">8ms</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>DevOps E-Commerce</h4>
+                    <p>Built with Kubernetes, Docker, and modern DevOps practices.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="#products">Products</a>
+                    <a href="#orders">Orders</a>
+                    <a href="#users">Users</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <a href="#">Documentation</a>
+                    <a href="#">API Reference</a>
+                    <a href="#">Support</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 DevOps E-Commerce. Deployed on Kubernetes.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+    <script>
+        // Mobile menu toggle
+        const navToggle = document.getElementById('nav-toggle');
+        const navMenu = document.querySelector('.nav-menu');
+        
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+        
+        // Close mobile menu on link click
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+    </script>
+</html>
